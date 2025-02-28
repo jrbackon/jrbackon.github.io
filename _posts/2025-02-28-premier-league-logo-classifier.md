@@ -2,7 +2,7 @@
 layout: post
 title:  The Beginning of a Deep Learning Journey
 date:   2025-02-28
-categories: fastbook, deep learning
+categories: fastbook
 ---
 This notebook is based on what I learned in chapter 1 and 2 of the book "Practical Deep Learning for Coders". The model built here will successfully categorize the logo for any team that played in the English Premier League in the 2021/22 season. While everyone else is waiting for scalable quantum chips, I'm doing the important work of ensuring you can successfully tell which team crest is which in the event you temporarily lose the ability to read English. 
 
