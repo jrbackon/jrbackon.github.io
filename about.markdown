@@ -1,11 +1,8 @@
 ---
 layout: page
-title: About
+title: whoami
 permalink: /about/
 ---
-
-# whoami
-
 root
 
 Just kidding. Please don't hack me.
