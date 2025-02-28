@@ -62,7 +62,7 @@ dls.train.show_batch(max_n=8)
 
 
     
-![png](../premier-league-logo-classifier_files/premier-league-logo-classifier_7_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/premier-league-logo-classifier_files/premier-league-logo-classifier_7_0.png?raw=true)
     
 
 
@@ -76,7 +76,7 @@ dls.valid.show_batch(max_n=8)
 
 
     
-![png](../premier-league-logo-classifier_files/premier-league-logo-classifier_9_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/premier-league-logo-classifier_files/premier-league-logo-classifier_9_0.png?raw=true)
     
 
 
@@ -194,7 +194,7 @@ easy_arsenal
 
 
     
-![png](../premier-league-logo-classifier_files/premier-league-logo-classifier_13_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/premier-league-logo-classifier_files/premier-league-logo-classifier_13_0.png?raw=true)
     
 
 
@@ -255,7 +255,7 @@ hard_arsenal
 
 
     
-![png](../premier-league-logo-classifier_files/premier-league-logo-classifier_17_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/premier-league-logo-classifier_files/premier-league-logo-classifier_17_0.jpg?raw=true)
     
 
 
