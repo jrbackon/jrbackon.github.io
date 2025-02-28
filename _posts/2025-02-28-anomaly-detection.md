@@ -807,7 +807,7 @@ plt.show()
 
 
     
-![png](project_datasplit_files/project_datasplit_28_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/project_datasplit_files/project_datasplit_28_0.png?raw=true)
     
 
 
