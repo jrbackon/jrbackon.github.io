@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Curve Fitting with Gradient Descent
-date:   2025-02-28
+date:   2025-03-17
 categories: Fastbook
 ---
 I started writing this post after reading chapter 4 of the "Practical Deep Learning for Coders" book. Chapter 4 goes under the hood of model building with neural networks and explains how the image classifiers we built in previous chapters actually work.
