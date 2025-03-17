@@ -1,3 +1,9 @@
+---
+layout: post
+title:  Curve Fitting with Gradient Descent
+date:   2025-02-28
+categories: Fastbook
+---
 I started writing this post after reading chapter 4 of the "Practical Deep Learning for Coders" book. Chapter 4 goes under the hood of model building with neural networks and explains how the image classifiers we built in previous chapters actually work.
 
 I intended to write a post that did the same thing with my premier league logo classifier, but immediately realized that my understanding is not where it needs to be. So, this post turned into a simple explanation of gradient descent using the technique to fit the parameters of a quadratic equation to match a random curve. I fully intend to build some version of my image classifier from scratch, but that will have to come in future posts.
