@@ -32,7 +32,7 @@ plt.ylabel("y")
 
 
     
-![png](gradient_descent_files/gradient_descent_2_1.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/gradient_descent_files/gradient_descent_2_1.png?raw=true)
     
 
 
@@ -62,7 +62,7 @@ plt.legend()
 
 
     
-![png](gradient_descent_files/gradient_descent_4_1.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/gradient_descent_files/gradient_descent_4_1.png?raw=true)
     
 
 
@@ -255,7 +255,7 @@ plt.legend()
 
 
     
-![png](gradient_descent_files/gradient_descent_21_1.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/gradient_descent_files/gradient_descent_21_1.png?raw=true)
     
 
 
