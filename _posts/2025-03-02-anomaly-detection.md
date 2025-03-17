@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Anomaly Detection with Isolation Forests
-date:   2025-02-28
+date:   2025-03-02
 categories: security
 ---
 This notebook was created based on the very last project I did for my MBA degree. I was taking the class "Programming for Business Analytics" and the assignment was essentially to do a project that was relevant to our work and applied what we learned in the class. The final deliverable was an "Amazon 6-pager" and oddly the professor didn't want there to be any code in it. The class taught us basic SQL and Python with some tenuous applications to traditional statistical analytics so naturally I decided to do a machine learning project.
