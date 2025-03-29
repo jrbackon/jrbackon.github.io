@@ -131,15 +131,6 @@ show_image(arsenal_tensors[12])
 
     1000
 
-
-
-
-
-    <Axes: >
-
-
-
-
     
 ![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_9_2.png?raw=true)
     
