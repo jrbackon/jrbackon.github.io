@@ -30,7 +30,7 @@ im_arsenal
 
 
     
-![png](image_classifier_1_files/image_classifier_1_1_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_1_0.png)
     
 
 
@@ -141,7 +141,7 @@ show_image(arsenal_tensors[12])
 
 
     
-![png](image_classifier_1_files/image_classifier_1_9_2.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_9_2.png)
     
 
 
@@ -205,7 +205,7 @@ plt.show()
 
 
     
-![png](image_classifier_1_files/image_classifier_1_15_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_15_0.png)
     
 
 
@@ -236,7 +236,7 @@ plt.show()
 
 
     
-![png](image_classifier_1_files/image_classifier_1_17_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_17_0.png)
     
 
 
@@ -358,7 +358,7 @@ show_image(weird_average.mean(0))
 
 
     
-![png](image_classifier_1_files/image_classifier_1_31_1.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_31_1.png)
     
 
 
