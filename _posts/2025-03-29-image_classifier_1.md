@@ -30,7 +30,7 @@ im_arsenal
 
 
     
-![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_1_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_1_0.png?raw=true)
     
 
 
@@ -141,7 +141,7 @@ show_image(arsenal_tensors[12])
 
 
     
-![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_9_2.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_9_2.png?raw=true)
     
 
 
@@ -205,7 +205,7 @@ plt.show()
 
 
     
-![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_15_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_15_0.png?raw=true)
     
 
 
@@ -236,7 +236,7 @@ plt.show()
 
 
     
-![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_17_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_17_0.png?raw=true)
     
 
 
@@ -249,9 +249,6 @@ dist_ars_abs = (stacked_arsenal[12] - mean_arsenal).abs().mean()
 dist_ars_sqr = ((stacked_arsenal[12] - mean_arsenal)**2).mean().sqrt()
 dist_ars_abs, dist_ars_sqr
 ```
-
-
-
 
     (tensor(0.0009), tensor(0.0011))
 
@@ -266,12 +263,7 @@ dist_liv_sqr = F.mse_loss(liverpool_tensors[12],mean_liverpool).sqrt()
 dist_liv_abs, dist_liv_sqr
 ```
 
-
-
-
     (tensor(0.0010), tensor(0.0013))
-
-
 
 These distances are pretty close to the ones from the Arsenal logo, but should be different enough to allow us to build our cheap classifier using a simple comparison. 
 
@@ -299,13 +291,7 @@ liv_train_tensors = liv_train_tensors.float()/255
 
 ars_train_tensors.shape, liv_train_tensors.shape
 ```
-
-
-
-
     (torch.Size([800, 4, 128, 128]), torch.Size([800, 4, 128, 128]))
-
-
 
 I'm now going to do the same stacking for my "validation" sets. These are the tensors I will use to "build" my model and determine how "good" it is. 
 
@@ -319,12 +305,7 @@ liv_valid_tensors = liv_valid_tensors.float()/255
 ars_valid_tensors.shape, liv_valid_tensors.shape
 ```
 
-
-
-
     (torch.Size([200, 4, 140, 140]), torch.Size([200, 4, 140, 140]))
-
-
 
 This next part gets a little tricky and is where I spent a lot of time trying to determine if I was doing any of this right. I created a function that will return the mean absolute distance between two images. You will notice the "mean" function has specific indices it is calling. The -1 and -2 correspond to the last and second to last axis of the tensor or (140, 140). This ensures that the function is taking the mean absolute value over the last two values which represent a single pixel in the image. Remember, that each pixel has 4 pieces of information "encoded" in it and so the function will automatically know to subtract each set of values (red-red, green-green, etc.) for each pixel.
 
@@ -333,9 +314,6 @@ This next part gets a little tricky and is where I spent a lot of time trying to
 def logo_distance(a,b): return (a-b).abs().mean((-1, -2))
 logo_distance(ars_valid_tensors[12], mean_arsenal)
 ```
-
-
-
 
     tensor([0.0014, 0.0008, 0.0008, 0.0018])
 
@@ -348,19 +326,9 @@ This is not the only way to do this. I could also average the 4 RGBA values, and
 weird_average = stacked_arsenal.mean(1)
 show_image(weird_average.mean(0))
 ```
-
-
-
-
-    <Axes: >
-
-
-
-
     
-![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_31_1.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_1_files/image_classifier_1_31_1.png?raw=true)
     
-
 
 While this image has the correct shape, the colors are way off. This is due to the fact that I averaged all of the RGBA values together to get a single value that the "show_image" method is attempting to render. I suspect that doing this would produce the same results I get below as long as I did the same averaging for my validation set. The relative "distances" from a single image to the ideal image should be preserved, but doing it this way feels wrong. Ultimately, I want to build a neural net that trains a model to be able to identify any Arsenal logo. In order to do this, I need to be able to tell the model what an Arsenal logo looks like, and this version just isn't a true Arsenal logo. So, in the interest of preparing for the future, I am going to use the ideal image with the RGBA values preserved.
 
@@ -385,199 +353,7 @@ ars_valid_distance, ars_valid_distance.shape
              [0.0008, 0.0008, 0.0006, 0.0009],
              [0.0011, 0.0008, 0.0007, 0.0015],
              [0.0008, 0.0007, 0.0006, 0.0009],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0008, 0.0010, 0.0007, 0.0009],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0010, 0.0009, 0.0007, 0.0010],
-             [0.0014, 0.0008, 0.0007, 0.0018],
-             [0.0016, 0.0008, 0.0008, 0.0020],
-             [0.0012, 0.0010, 0.0007, 0.0013],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0011, 0.0011, 0.0008, 0.0013],
-             [0.0012, 0.0008, 0.0007, 0.0015],
-             [0.0016, 0.0008, 0.0008, 0.0021],
-             [0.0010, 0.0008, 0.0007, 0.0012],
-             [0.0009, 0.0010, 0.0008, 0.0010],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0012, 0.0008, 0.0007, 0.0016],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0011, 0.0008, 0.0007, 0.0015],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0011, 0.0010, 0.0008, 0.0012],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0010, 0.0009, 0.0007, 0.0010],
-             [0.0012, 0.0011, 0.0008, 0.0013],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0016, 0.0008, 0.0008, 0.0021],
-             [0.0012, 0.0011, 0.0008, 0.0013],
-             [0.0008, 0.0009, 0.0007, 0.0009],
-             [0.0008, 0.0008, 0.0006, 0.0009],
-             [0.0008, 0.0009, 0.0007, 0.0009],
-             [0.0010, 0.0008, 0.0007, 0.0012],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0011, 0.0010, 0.0008, 0.0013],
-             [0.0009, 0.0009, 0.0007, 0.0010],
-             [0.0011, 0.0010, 0.0008, 0.0012],
-             [0.0012, 0.0011, 0.0009, 0.0013],
-             [0.0008, 0.0008, 0.0007, 0.0009],
-             [0.0008, 0.0008, 0.0007, 0.0009],
-             [0.0009, 0.0010, 0.0008, 0.0010],
-             [0.0008, 0.0008, 0.0006, 0.0009],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0007, 0.0007, 0.0005, 0.0009],
-             [0.0008, 0.0008, 0.0007, 0.0009],
-             [0.0008, 0.0008, 0.0006, 0.0010],
-             [0.0009, 0.0010, 0.0008, 0.0011],
-             [0.0011, 0.0011, 0.0008, 0.0012],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0009, 0.0009, 0.0007, 0.0010],
-             [0.0009, 0.0010, 0.0007, 0.0009],
-             [0.0011, 0.0008, 0.0007, 0.0014],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0008, 0.0008, 0.0006, 0.0009],
-             [0.0007, 0.0008, 0.0006, 0.0008],
-             [0.0012, 0.0011, 0.0009, 0.0013],
-             [0.0009, 0.0009, 0.0007, 0.0010],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0009, 0.0008, 0.0007, 0.0009],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0008, 0.0008, 0.0006, 0.0010],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0010, 0.0008, 0.0007, 0.0013],
-             [0.0008, 0.0009, 0.0007, 0.0009],
-             [0.0008, 0.0008, 0.0006, 0.0009],
-             [0.0011, 0.0011, 0.0008, 0.0012],
-             [0.0010, 0.0009, 0.0007, 0.0011],
-             [0.0008, 0.0009, 0.0007, 0.0009],
-             [0.0016, 0.0008, 0.0008, 0.0021],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0015, 0.0008, 0.0008, 0.0019],
-             [0.0008, 0.0008, 0.0007, 0.0010],
-             [0.0009, 0.0008, 0.0007, 0.0010],
-             [0.0010, 0.0008, 0.0007, 0.0013],
-             [0.0009, 0.0009, 0.0007, 0.0011],
-             [0.0013, 0.0008, 0.0007, 0.0018],
-             [0.0014, 0.0008, 0.0007, 0.0019],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0014, 0.0008, 0.0008, 0.0019],
-             [0.0011, 0.0011, 0.0008, 0.0012],
-             [0.0010, 0.0008, 0.0007, 0.0012],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0009, 0.0009, 0.0007, 0.0011],
-             [0.0011, 0.0011, 0.0008, 0.0012],
-             [0.0009, 0.0009, 0.0007, 0.0011],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0009, 0.0008, 0.0006, 0.0010],
-             [0.0010, 0.0010, 0.0008, 0.0012],
-             [0.0012, 0.0008, 0.0007, 0.0015],
-             [0.0010, 0.0009, 0.0007, 0.0010],
-             [0.0010, 0.0011, 0.0008, 0.0012],
-             [0.0012, 0.0011, 0.0008, 0.0013],
-             [0.0010, 0.0010, 0.0008, 0.0012],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0011, 0.0010, 0.0008, 0.0012],
-             [0.0011, 0.0008, 0.0007, 0.0014],
-             [0.0009, 0.0010, 0.0008, 0.0010],
-             [0.0009, 0.0009, 0.0007, 0.0009],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0008, 0.0008, 0.0006, 0.0009],
-             [0.0010, 0.0010, 0.0007, 0.0011],
-             [0.0010, 0.0008, 0.0007, 0.0013],
-             [0.0009, 0.0009, 0.0007, 0.0011],
-             [0.0009, 0.0008, 0.0007, 0.0010],
-             [0.0009, 0.0009, 0.0007, 0.0011],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0011, 0.0008, 0.0007, 0.0014],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0014, 0.0008, 0.0007, 0.0018],
-             [0.0012, 0.0011, 0.0008, 0.0013],
-             [0.0008, 0.0009, 0.0007, 0.0009],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0013, 0.0008, 0.0007, 0.0017],
-             [0.0009, 0.0009, 0.0007, 0.0009],
-             [0.0013, 0.0008, 0.0007, 0.0017],
-             [0.0009, 0.0008, 0.0006, 0.0011],
-             [0.0016, 0.0008, 0.0008, 0.0021],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0009, 0.0010, 0.0008, 0.0010],
-             [0.0008, 0.0008, 0.0006, 0.0009],
-             [0.0009, 0.0008, 0.0006, 0.0010],
-             [0.0007, 0.0008, 0.0006, 0.0008],
-             [0.0016, 0.0008, 0.0008, 0.0021],
-             [0.0008, 0.0008, 0.0006, 0.0009],
-             [0.0009, 0.0009, 0.0007, 0.0011],
-             [0.0012, 0.0008, 0.0007, 0.0015],
-             [0.0012, 0.0008, 0.0007, 0.0016],
-             [0.0011, 0.0011, 0.0008, 0.0012],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0010, 0.0009, 0.0007, 0.0010],
-             [0.0015, 0.0008, 0.0008, 0.0019],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0010, 0.0010, 0.0008, 0.0012],
-             [0.0015, 0.0008, 0.0008, 0.0020],
-             [0.0009, 0.0009, 0.0007, 0.0010],
-             [0.0011, 0.0008, 0.0007, 0.0013],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0007, 0.0007, 0.0005, 0.0008],
-             [0.0007, 0.0008, 0.0006, 0.0008],
-             [0.0007, 0.0007, 0.0006, 0.0009],
-             [0.0009, 0.0009, 0.0007, 0.0011],
-             [0.0009, 0.0008, 0.0006, 0.0010],
-             [0.0008, 0.0008, 0.0007, 0.0009],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0015, 0.0008, 0.0007, 0.0020],
-             [0.0009, 0.0008, 0.0006, 0.0012],
-             [0.0010, 0.0008, 0.0007, 0.0013],
-             [0.0015, 0.0008, 0.0008, 0.0020],
-             [0.0007, 0.0007, 0.0006, 0.0008],
-             [0.0009, 0.0008, 0.0006, 0.0011],
-             [0.0010, 0.0008, 0.0007, 0.0012],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0011, 0.0010, 0.0008, 0.0012],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0013, 0.0008, 0.0007, 0.0017],
-             [0.0011, 0.0008, 0.0007, 0.0014],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0013, 0.0008, 0.0007, 0.0017],
-             [0.0011, 0.0010, 0.0008, 0.0012],
-             [0.0008, 0.0008, 0.0006, 0.0009],
-             [0.0016, 0.0008, 0.0008, 0.0021],
-             [0.0011, 0.0011, 0.0008, 0.0013],
-             [0.0011, 0.0008, 0.0007, 0.0014],
-             [0.0010, 0.0008, 0.0007, 0.0012],
-             [0.0009, 0.0009, 0.0007, 0.0010],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0008, 0.0008, 0.0006, 0.0009],
-             [0.0010, 0.0008, 0.0007, 0.0012],
-             [0.0010, 0.0010, 0.0008, 0.0011],
-             [0.0011, 0.0010, 0.0007, 0.0012],
-             [0.0008, 0.0010, 0.0007, 0.0009],
-             [0.0009, 0.0009, 0.0007, 0.0010],
-             [0.0010, 0.0009, 0.0007, 0.0010],
-             [0.0009, 0.0009, 0.0007, 0.0011],
-             [0.0008, 0.0009, 0.0007, 0.0010],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0010, 0.0008, 0.0006, 0.0012],
-             [0.0010, 0.0010, 0.0007, 0.0010],
-             [0.0008, 0.0008, 0.0006, 0.0008],
-             [0.0009, 0.0009, 0.0008, 0.0011],
-             [0.0011, 0.0011, 0.0008, 0.0012],
-             [0.0009, 0.0009, 0.0007, 0.0009],
-             [0.0010, 0.0010, 0.0008, 0.0011]]),
+             ...])
      torch.Size([200, 4]))
 
 
@@ -620,199 +396,7 @@ is_arsenal(ars_valid_tensors)
             [ True,  True,  True,  True],
             [False,  True,  True, False],
             [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True, False],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True, False],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [False,  True,  True, False],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True],
-            [ True,  True,  True,  True]])
+            ...])
 
 
 
