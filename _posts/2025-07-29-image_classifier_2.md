@@ -151,7 +151,7 @@ plt.plot(x, y)
 ```
     [<matplotlib.lines.Line2D at 0x150fe5f70>]
     
-![png](image_classifier_2_files/image_classifier_2_19_1.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_2_files/image_classifier_2_19_1.png?raw=true)
     
 
 
@@ -247,7 +247,7 @@ plt.show()
 
 
     
-![png](image_classifier_2_files/image_classifier_2_31_0.png)
+![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_2_files/image_classifier_2_31_0.png?raw=true)
     
 
 
