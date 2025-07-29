@@ -140,20 +140,9 @@ The first thing I want to do now that I have a set of predictions is see how "go
 Before I do this, I have a small problem. Some of the predictions are positive and some are negative. This is because I randomly created a set of weights and some of them were negative. I want all of the predictions to be between 0 and 1 or the "distances" won't be accurate. For example, (1 - (-weight)) will provide a distance greater than 1 which the model won't know how to handle. 
 
 To solve this problem, I introduce the sigmoid function. The sigmoid function looks like this:
-
-```python
-import matplotlib.pyplot as plt
-import numpy as np
-
-x = np.linspace(-5,5)
-y = 1/(1+(np.exp(-x)))
-plt.plot(x, y)
-```
-    [<matplotlib.lines.Line2D at 0x150fe5f70>]
     
 ![png](https://github.com/jrbackon/jrbackon.github.io/blob/main/image_classifier_2_files/image_classifier_2_19_1.png?raw=true)
     
-
 
 All values of the sigmoid function are betwen 0 and 1 which is perfect for this use case. Now I can build the loss function. To do so there are a few things I have to keep track of:
 - First, I have to take the results of the linear model and get them between 0 and 1. I can use the sigmoid function for this.
@@ -178,18 +167,6 @@ First, I set the initial parameters. I've included some summary statistics to se
 ```python
 weights = init_params((140*140*4,1))
 bias = init_params(1)
-
-w1_mean = weights.mean().item()
-w1_std = weights.std().item()
-w1_min = weights.min().item()
-w1_max = weights.max().item()
-w1_median = weights.median().item()
-
-print(f"Mean: {w1_mean:.4f}")
-print(f"Std: {w1_std:.4f}")
-print(f"Min: {w1_min:.4f}")
-print(f"Max: {w1_max:.4f}")
-print(f"Median: {w1_median:.4f}")
 ```
 
     Mean: 0.0005
@@ -235,14 +212,6 @@ I'm almost there. Now for the actual learning part. The next step is to calculat
 ```python
 loss.backward()
 weights.grad.shape, weights.grad.mean(), bias.grad
-
-plt.figure(figsize=(8, 5))
-plt.hist(weights.grad, bins=50, color='skyblue', edgecolor='black')
-plt.title("Histogram of Gradient Values")
-plt.xlabel("Value")
-plt.ylabel("Frequency")
-plt.grid(True)
-plt.show()
 ```
 
 
@@ -260,12 +229,6 @@ params = weights, bias
 for p in params:
     p.data -= p.grad
     p.grad.zero_()
-    
-print(f"Original Mean: {w1_mean:.4f}" " | " f"Mean after gd: {weights.mean().item():.4f}")
-print(f"Original Std: {w1_std:.4f}" " | " f"Std after gd: {weights.std().item():.4f}")
-print(f"Original Min {w1_min:.4f}" " | " f"Min after gd: {weights.min().item():.4f}")
-print(f"Original Max {w1_max:.4f}" " | " f"Max after gd: {weights.max().item():.4f}")
-print(f"Original Median {w1_median:.4f}" " | " f"Median after gd: {weights.median().item():.4f}")
 ```
 
     Original Mean: 0.0005 | Mean after gd: 0.0009
